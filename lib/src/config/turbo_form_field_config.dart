@@ -14,7 +14,7 @@ part 'turbo_form_field_extensions.dart';
 part 'turbo_form_field_state.dart';
 
 class TurboFormFieldConfig<T> extends TurboNotifier<TurboFormFieldState<T>>
-    with Loglytics {
+    with Turbolytics {
   TurboFormFieldConfig({
     FormFieldValidator<T>? valueValidator,
     List<T>? initialValues,
