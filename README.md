@@ -1,39 +1,77 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# 📝 Turbo Forms
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
+[![Pub Version](https://img.shields.io/pub/v/turbo_forms?logo=dart&label=turbo_forms)](https://pub.dev/packages/turbo_forms)
+[![License: BSD-3-Clause](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+[![GitHub Stars](https://img.shields.io/github/stars/appboypov/turbo_forms?style=social)](https://github.com/appboypov/turbo_forms)
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+**Turbo Forms** is a comprehensive form configuration and validation system for Flutter applications. It provides a type-safe, reactive approach to building and managing forms with built-in validation, state management, and UI components.
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+- **Type-Safe Forms**: Strongly typed form fields with generic support
+- **Reactive State Management**: Built on `turbo_notifiers` for reactive form state
+- **Built-in Validators**: Common validators for email, required fields, and more
+- **Custom Validators**: Easy-to-create custom validation logic
+- **Multiple Field Types**: Support for text input, select, checkbox, color picker, and more
+- **Form Field Builders**: Flexible widget builders for custom UI rendering
 
-## Getting started
+## Installation
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+Add `turbo_forms` to your `pubspec.yaml` file:
+
+```yaml
+dependencies:
+  flutter:
+    sdk: flutter
+  turbo_forms: ^1.0.0
+```
+
+Then run:
+
+```bash
+flutter pub get
+```
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
 ```dart
-const like = 'sample';
+import 'package:turbo_forms/turbo_forms.dart';
+
+// Create a form field configuration
+final emailField = TurboFormFieldConfig<String>(
+  fieldType: TurboFieldType.textInput,
+  id: 'email',
+  valueValidator: (value) {
+    if (value == null || value.isEmpty) {
+      return 'Email is required';
+    }
+    if (!EmailValidator.validate(value)) {
+      return 'Invalid email format';
+    }
+    return null;
+  },
+);
+
+// Use in a widget
+TurboFormField<String>(
+  fieldConfig: emailField,
+  builder: (context, fieldConfig, child) {
+    return TextFormField(
+      onChanged: (value) => fieldConfig.update(value),
+      validator: fieldConfig.value.valueValidator,
+    );
+  },
+)
 ```
 
-## Additional information
+## Example
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+Check the `/example` directory for a complete Flutter application demonstrating Turbo Forms features.
+
+## Contributing
+
+Contributions are welcome! Please open issues or pull requests on our [GitHub repository](https://github.com/appboypov/turbo_forms).
+
+## License
+
+This package is licensed under the BSD 3-Clause License. See the [LICENSE](LICENSE) file for details.
